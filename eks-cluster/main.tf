@@ -9,14 +9,14 @@
   
 }*/
 
-data "aws_availability_zones" "azs" {}
+#data "aws_availability_zones" "azs" {}
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
   name = "my-vpc"
   cidr = var.cidr_block
  #security_group_ids=[security_group.alpha.id]
-  azs             = data.aws_availability_zones.azs.names
+  azs             = "us-east-1a"     ##data.aws_availability_zones.azs.names
   private_subnets = var.private_subnets
   public_subnets  = var.public_subnets
 
