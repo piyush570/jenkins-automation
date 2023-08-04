@@ -11,12 +11,22 @@ pipeline {
                 script {
                     dir('eks-cluster') {
                         sh "terraform init"
-                
+                        
                         sh 'terraform destroy -auto-approve --var-file="prod.tfvars"'
                     }
                 }
             }
         }
-        
+        stage("Deploy to EKS") {
+            steps {
+                script {
+                    dir('kubernetes') {
+                        sh "aws eks update-kubeconfig --name my-cluster-tf --region us-east-1"
+                        sh "kubectl apply -f deployment.yaml"
+                        sh "kubectl apply -f service.yaml"
+                    }
+                }
+            }
+        }
     }
 }
