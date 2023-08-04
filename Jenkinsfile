@@ -12,6 +12,7 @@ pipeline {
                     dir('eks-cluster') {
                         sh "terraform init"
                         sh 'terraform apply -auto-approve --var-file="prod.tfvars"'
+                        sh 'terraform destroy -auto-approve --var-file="prod.tfvars"'
                     }
                 }
             }
